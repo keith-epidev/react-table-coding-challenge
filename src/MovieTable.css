@@ -1,0 +1,31 @@
+.MovieTable table.content {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+.MovieTable table.content td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+.MovieTable table.content tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.MovieTable .controls .pageDetails{
+    display:inline-block;
+    text-align:center;
+    width:100px;
+}
+
+.MovieTable .controls{
+    text-align: center;
+    margin-top:20px;
+}
+
+.MovieTable .loadingMessage{
+    margin-top:20px;
+    text-align: center;
+}
