@@ -15,8 +15,17 @@
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    transition: background-color 0.1s;
   }
   
+  .MovieTable table.content  th:hover {
+    background-color: #eee;
+  }
+
+  .MovieTable table.content  th:active {
+    background-color: #ccc !important;
+  }
+
 .MovieTable table.content tr:nth-child(even) {
     background-color: #dddddd;
 }
@@ -35,4 +44,17 @@
 .MovieTable .loadingMessage{
     margin-top:20px;
     text-align: center;
+}
+
+
+.MovieTable table.content tbody tr{
+    transition: background-color 0.1s;
+}
+
+.MovieTable table.content tbody tr:hover {
+    background-color: #eee;
+}
+
+.MovieTable table.content tbody tr:active {
+    background-color: #ccc !important;
 }

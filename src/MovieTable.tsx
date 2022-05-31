@@ -14,6 +14,9 @@ export function MovieTable(props:MovieTableI) {
     const movieAPI = useMovieAPI();
     const loadingRef = useRef(false); // ref to get stop react.strict double loading in dev mode
     
+    const [sortKey,setSortKey] = useState("Title");
+    const [sortDirection,setSortDirection] = useState(false);
+
     async function load(){
       if(!loadingRef.current){
         loadingRef.current = true;
@@ -35,6 +38,23 @@ export function MovieTable(props:MovieTableI) {
     }
 
 
+    const columns = [
+        {title:"Year",key:"Year"},
+        {title:"Title",key:"Title"},
+        {title:"IMDB ID",key:"imdbID"}
+    ];
+
+
+    function handleSortToggle(key:string){
+
+        if(key == sortKey){
+            setSortDirection(!sortDirection)
+        }else{
+            setSortKey(key);
+        }
+
+    }
+
 
     if(movieAPI.result != null){
  
@@ -49,9 +69,7 @@ export function MovieTable(props:MovieTableI) {
      <table className="content" style={styles.content} >
             <thead>
                 <tr>
-                    <th>Year</th>
-                    <th>Title</th>
-                    <th>IMDB ID</th>
+                    {columns.map( column => <th onClick={() => handleSortToggle(column.key) } key={column.key}>{column.title} {column.key == sortKey ? <SortArrow direction={sortDirection} />:null} </th>)}
                 </tr>
             </thead>
             <tbody>
@@ -85,6 +103,21 @@ export function MovieTable(props:MovieTableI) {
 
   }
   
+
+interface SortArrowI{
+    direction:boolean;
+}
+
+
+function SortArrow(props:SortArrowI){
+    const {direction} = props;
+
+    if(direction)
+        return <>{"▲"}</>;
+    else
+        return <>{"▼"}</>;
+
+}
 
 
 
