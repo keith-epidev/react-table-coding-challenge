@@ -21,7 +21,9 @@ export class MovieAPI{
     page:number;
     sortKey:string;
     sortDirection:boolean;
+    searchString:string;
     updatedFn:(null|(() => void));
+    abortController:AbortController|null;
 
     constructor(){
         this.loading = false;
@@ -29,7 +31,11 @@ export class MovieAPI{
         this.sortKey = "Title"
         this.sortDirection = false;
         this.page = 1;
+        this.searchString = "";
         this.updatedFn = null;
+        this.abortController = null;
+
+        
     }
 
     async updated(){
@@ -46,14 +52,29 @@ export class MovieAPI{
     }  
 
     async load():Promise<void>{
+        try{
+        if(this.abortController != null)
+            this.abortController.abort();
+
+        this.abortController = new AbortController();
         
+        
+
         this.loading = true;
         this.updated();
-        let result = await fetch(`https://jsonmock.hackerrank.com/api/movies/search/?page=${this.page}`);
+        let searchStr = this.searchString == "" ? "" : `&Title=${this.searchString}`
+        const url =`https://jsonmock.hackerrank.com/api/movies/search/?page=${this.page}${searchStr}`;
+        console.log(url);
+        let result = await fetch(url,{signal:this.abortController.signal});
         let json: HackerRankSearchResult = await result.json() as HackerRankSearchResult; // assume consistent well formed data
         this.result = json;
         this.loading = false;
         this.updated();
+
+        }catch(E:any){
+            if(E.message != "The user aborted a request.")
+                throw E;
+        }
       }
       
       async firstPage(){
@@ -85,6 +106,11 @@ export class MovieAPI{
         }
     }
 
+
+    async setSearchString(value:string){
+        this.searchString = value;
+        await this.load();
+    }
 
 }
 

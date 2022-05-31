@@ -1,3 +1,10 @@
+.MovieTable .search{
+    margin-bottom:10px;
+    padding:5px;
+    width:auto;
+    
+}
+
 .MovieTable table.content {
     font-family: arial, sans-serif;
     border-collapse: collapse;

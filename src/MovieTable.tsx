@@ -10,7 +10,7 @@ interface MovieTableI{
 
 export function MovieTable(props:MovieTableI) {
 
-
+    
     const movieAPI = useMovieAPI();
     const loadingRef = useRef(false); // ref to get stop react.strict double loading in dev mode
     
@@ -41,6 +41,9 @@ export function MovieTable(props:MovieTableI) {
   
     return (
       <div className="MovieTable">
+
+
+          <input className="search" placeholder="Search" value={movieAPI.searchString} onChange={(e) => {movieAPI.setSearchString(e.target.value)}} />
       
        
      <table className="content" style={styles.content} >
